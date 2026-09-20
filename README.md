@@ -1,12 +1,44 @@
-# Lorti UI Classic.
+# Lorti UI Forever
 
-Darkens the default UI.
+An unofficial Lorti UI port for the World of Warcraft: Forever beta.
+It adds dark borders, glossy buttons and cropped icons to the native UI.
 
-Big thanks to the original creator of this UI, Lorti. This is simply updated to work with the Classic client and does not work with any other vanilla/private server client.
-https://www.curseforge.com/wow/addons/lorti_ui
+![Lorti UI Forever in game](docs/images/in-game.png)
 
-I feel pretty done with this, and will mostly just fix major issues if any pops up. Most frames should now be colored. Let me know if you find anything that looks weird!
+## Install
 
-Discord: Chordsy#8773
+Download the release ZIP and extract `LortiUIForever` into `Interface/AddOns`.
+Enable **Lorti UI Forever** on the character screen. Disable overlapping UI skins
+when checking its appearance.
 
-Remove the "-master" when downloaded. Folder should look like this: \Interface\AddOns\Lorti-UI-Classic
+## Settings
+
+Type `/lorti` for settings and status. Use `/lorti off` or `/lorti on` to toggle
+the skin, then `/reload`. Frames, buttons, auras, hotkeys and macro names have
+separate switches. See [FOREVER.md](FOREVER.md) for all commands.
+
+## Beta notes
+
+Version **0.1.0-beta** targets interface **16001**. It keeps Forever's native frame
+layout and controls. Some protected auras and unsupported windows stay unchanged.
+The screenshot shows an in-game example; full combat, raid and taint checks remain
+outstanding. Please include the first full error and `/lorti` output in bug reports.
+
+Source and issues: https://github.com/coffeelover1010/lorti-ui-forever
+
+## Credits and license
+
+This is an unofficial port of Lorti UI. It is not an official release by the
+original authors, and it is not affiliated with Blizzard Entertainment.
+
+- Original Lorti UI: **Lorti / lortipwnz** — https://www.curseforge.com/wow/addons/lorti_ui
+- Classic adaptation: **Chordsy and the upstream contributors**.
+- Source used: https://github.com/EzioAu/Lorti-UI-Classic
+- Upstream revision: `7e0cf9162b6752adf20ead39d2ce0f992ed7b61b` (Classic 1.1.0).
+- Forever adaptation and maintenance: **Videocat / coffeelover1010**.
+
+Released under the **GNU General Public License version 3 (GPLv3)**. See
+[LICENSE](LICENSE) and [NOTICE.md](NOTICE.md). The original project's license is
+published at https://www.curseforge.com/wow/addons/lorti_ui/license.
+The upstream snapshot omitted a license file; this distribution includes it.
+Original code and artwork remain credited to their respective authors.
