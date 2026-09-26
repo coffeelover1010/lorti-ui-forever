@@ -1,11 +1,12 @@
 ## Interface: 16001
 ## Title: Lorti UI Forever
 ## Author: Lorti, Chordsy; Forever port by Videocat
-## Version: 0.1.0-beta
+## Version: 0.1.3-beta
 ## Notes: Lorti's dark artwork and glossy buttons, adapted to Forever's native frames.
 ## X-License: GPL-3.0-only
 ## X-Website: https://github.com/coffeelover1010/lorti-ui-forever
 ## SavedVariables: LortiUIForeverDB
+SettingsBackup.lua
 forever\Core.lua
 forever\Frames.lua
 forever\Buttons.lua

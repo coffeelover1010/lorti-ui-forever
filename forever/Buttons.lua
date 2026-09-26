@@ -21,7 +21,6 @@ local function style(button)
     if not ns.Safe(normal) then return end
     styled[button] = true
     ns.counts.buttons = ns.counts.buttons + 1
-    icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     -- Keep native masks, button geometry, cooldowns, checked state and overlays.
     local function normalArt()
         normal:SetTexture(ns.media .. "gloss")
@@ -62,8 +61,6 @@ local function apply()
     for _, prefix in ipairs(prefixes) do
         for i = 1, 12 do style(_G[prefix .. i]) end
     end
-    style(_G.MainMenuBarBackpackButton)
-    for i = 0, 3 do style(_G["CharacterBag" .. i .. "Slot"]) end
     if SpellFlyout and ns.Safe(SpellFlyout) then
         ns.Hook(SpellFlyout, "Show", ns.Queue)
         if SpellFlyout.buttonPool and SpellFlyout.buttonPool.EnumerateActive then
@@ -73,3 +70,23 @@ local function apply()
     end
 end
 table.insert(ns.modules, { option = "buttons", apply = apply })
+
+local function applyBagBar()
+    if C_AddOns and C_AddOns.IsAddOnLoaded("Masque") then return end
+    style(_G.MainMenuBarBackpackButton)
+    for i = 0, 3 do style(_G["CharacterBag" .. i .. "Slot"]) end
+    style(_G.CharacterReagentBag0Slot)
+end
+table.insert(ns.modules, { option = "bagbar", apply = applyBagBar })
+
+local function applyKeyRing()
+    if C_AddOns and C_AddOns.IsAddOnLoaded("Masque") then return end
+    style(_G.KeyRingButton)
+    -- Its native texture contains the key icon: add an outline, never tint it.
+    local button = ns.Resolve("GamepadBagBar.KeyRingButton")
+    if button and not styled[button] then
+        ns.Outline(button, button, false)
+        styled[button] = true
+    end
+end
+table.insert(ns.modules, { option = "keyring", apply = applyKeyRing })

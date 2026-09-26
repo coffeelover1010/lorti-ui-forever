@@ -4,12 +4,12 @@ This ports the original Lorti UI Classic 1.1.0 appearance onto Forever's native 
 It uses the original gloss, pushed-button, flash and shadow artwork. It darkens
 the player, target, focus, pet and party borders, minimap ring, gryphons, supported
 window borders and exposed raid borders. Buttons and accessible player buff icons
-use Lorti's cropped icons, outline fonts and shadows.
+keep their native icons, with Lorti borders, outline fonts and shadows.
 
 ## Install and use
 
 The install folder must be `Interface/AddOns/LortiUIForever`. Only copy
-`LortiUIForever.toc`, `forever/`, `textures/`, `LICENSE` and the documentation into it. The old Classic TOC,
+`LortiUIForever.toc`, `SettingsBackup.lua`, `forever/`, `textures/`, `LICENSE` and the documentation into it. The old Classic TOC,
 `config.lua` and `core/` are reference source and must not be loaded in Forever.
 
 Enable **Lorti UI Forever** in the character screen's AddOns list, then log in.
@@ -19,8 +19,19 @@ detect the new addon after `/reload`, return to the character screen or restart 
 
 - `/lorti` shows client/build details, options and numbers of styled objects.
 - `/lorti off` or `/lorti on` disables or enables the port after `/reload`.
-- `/lorti frames on|off` toggles dark frame artwork.
-- `/lorti buttons on|off` toggles action and bag button styling.
+- `/lorti frames on|off` toggles unit frame and action bar artwork.
+- `/lorti minimap on|off` toggles minimap darkening independently.
+- `/lorti windows on|off` toggles other window darkening independently (off by default).
+- `/lorti tooltips on|off` toggles dark tooltip borders independently.
+- `/lorti buttons on|off` toggles action button styling.
+- `/lorti bags on|off` toggles bag window darkening.
+- `/lorti bagbar on|off` toggles bag bar button styling.
+- `/lorti keyring on|off` toggles key ring button styling.
+- `/lorti menu on|off` toggles menu bar artwork and button backgrounds.
+
+Key ring and menu styling start off. Both have their own checkboxes.
+
+The bag options start with your previous window and button choices. Change either independently, then reload.
 - `/lorti auras on|off` toggles accessible buff/debuff icon styling.
 - `/lorti hotkeys on|off` shows or hides keybind text.
 - `/lorti macronames on|off` shows or hides macro names.
@@ -83,3 +94,6 @@ Released under the **GNU General Public License version 3 (GPLv3)**. See
 published at https://www.curseforge.com/wow/addons/lorti_ui/license.
 The upstream snapshot omitted a license file; this distribution includes it.
 Original code and artwork remain credited to their respective authors.
+
+- `/lorti xpbar on|off` toggles the XP bar border and dividers (off initially). Blizzard shares these borders with reputation bars. Progress and rested-XP fills keep their colours.
+- Bag bar styling includes its outer border and dividers. Icon colours, textures and cropping stay native, including action buttons and auras.

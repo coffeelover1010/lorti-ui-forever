@@ -9,7 +9,6 @@ local function style(button)
     if not ns.Safe(icon) or not icon.SetTexCoord then return end
     styled[button] = true
     ns.counts.auras = ns.counts.auras + 1
-    icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
     local edge = ns.Outline(button, icon, true)
     -- Keep dispel/weapon-enchant colours above the decorative outline.
     edge:SetDrawLayer("ARTWORK", 1)
@@ -37,7 +36,6 @@ local function apply()
                     -- Avoid adding field aliases to Blizzard's secure frames.
                     if button.Icon then style(button)
                     elseif ns.Safe(icon) and icon.SetTexCoord then
-                        icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
                         ns.Outline(button, icon, true)
                         styled[button] = true
                         ns.counts.auras = ns.counts.auras + 1

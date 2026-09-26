@@ -1,7 +1,7 @@
 # Lorti UI Forever
 
 An unofficial Lorti UI port for the World of Warcraft: Forever beta.
-It adds dark borders, glossy buttons and cropped icons to the native UI.
+It adds dark borders, glossy button borders to the native UI.
 
 ![Lorti UI Forever in game](docs/images/in-game.png)
 
@@ -14,12 +14,12 @@ when checking its appearance.
 ## Settings
 
 Type `/lorti` for settings and status. Use `/lorti off` or `/lorti on` to toggle
-the skin, then `/reload`. Frames, buttons, auras, hotkeys and macro names have
+the skin, then `/reload`. Frames, minimap, other windows, bag windows, bag bar buttons, key ring, menu bar, XP bar border, tooltips, action buttons, auras, hotkeys and macro names have
 separate switches. See [FOREVER.md](FOREVER.md) for all commands.
 
 ## Beta notes
 
-Version **0.1.0-beta** targets interface **16001**. It keeps Forever's native frame
+Version **0.1.3-beta** targets interface **16001**. It keeps Forever's native frame
 layout and controls. Some protected auras and unsupported windows stay unchanged.
 The screenshot shows an in-game example; full combat, raid and taint checks remain
 outstanding. Please include the first full error and `/lorti` output in bug reports.

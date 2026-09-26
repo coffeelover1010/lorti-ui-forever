@@ -37,6 +37,11 @@ function object(kind, name)
     function o:SetAtlas(t) self.atlas = t end
     function o:SetTexCoord(...) self.coords = {...} end
     function o:SetPoint(...) self.point = {...} end
+    function o:SetSize(w, h) self.width = w; self.height = h end
+    function o:SetWidth(w) self.width = w end
+    function o:SetHeight(h) self.height = h end
+    function o:GetWidth() error('Secret width must not be read') end
+    function o:GetHeight() error('Secret height must not be read') end
     function o:SetAllPoints(t) self.anchor = t end
     function o:SetAlpha(a) self.alpha = a end
     function o:SetDrawLayer(...) end
@@ -101,6 +106,12 @@ def runtime(setup='', saved=''):
 
 lua, ns = runtime()
 assert ns.counts.textures == 0
+for aura in (True, False):
+    owner = lua.eval("object('Button')")
+    edge, shadow = ns.Outline(owner, owner, aura)
+    assert shadow.template is None and shadow.OnSizeChanged is None
+    assert len(shadow.regions) == 8
+    assert shadow.regions[1].width == (4 if aura else 5)
 lua.execute("setupObjects(); fire('ADDON_LOADED', 'Blizzard_BuffFrame'); drain()")
 assert ns.counts.buttons == 1 and ns.counts.auras == 1
 lua.execute(r'''
