@@ -1,5 +1,16 @@
 # Release record
 
+## 0.1.3-beta — 2026-09-26
+
+- Source commit: `032c4f2`.
+- GitHub release: https://github.com/coffeelover1010/lorti-ui-forever/releases/tag/v0.1.3-beta
+- CurseForge file: https://www.curseforge.com/wow/addons/lorti-ui-port/files/8978818
+- CurseForge submission: Beta, Forever 1.60.1, automatic publication after approval.
+- ZIP SHA-256: `557adfbfaa2f943fba335a540e08028e71f6242805309d646e97c52695d52156`.
+- Validated 27 allowlisted files, TOC references, source equality and Lua 5.1 contracts.
+- Public GitHub download matched the ZIP. CurseForge approval was pending at submission.
+- User confirmed appearance; full combat and taint testing remains outstanding.
+
 ## 0.1.0-beta — 2026-09-20
 
 - Source: https://github.com/coffeelover1010/lorti-ui-forever
