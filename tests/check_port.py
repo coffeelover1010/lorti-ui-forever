@@ -164,3 +164,57 @@ assert(button.normal.texture ~= nil)
 ''')
 assert ns.counts.buttons == 2
 print('PASS: Lua 5.1 syntax and offline compatibility contracts (not a live-client test).')
+
+# Bartender registry, artwork resets, ownership and deferred creation.
+BT_SETUP = r'''
+C_AddOns.IsAddOnLoaded = function(n) return n == "Bartender4" end
+function makeBT(name)
+    local b = object('Button', name)
+    b.icon = object('Texture'); b.normal = object('Texture')
+    b.HotKey = object('FontString'); b.Name = object('FontString')
+    b.Border = object('Texture'); b.cooldown = object('Cooldown')
+    function b:SetNormalTexture(t) self.normal:SetTexture(t) end
+    function b:SetNormalAtlas(t) self.normal:SetAtlas(t) end
+    _G[name] = b
+    return b
+end
+registry = {}
+lab = { GetAllButtons = function() return registry end }
+function lab:CreateButton(id, name)
+    local b = makeBT(name); registry[b] = true; return b
+end
+LibStub = function() return lab end
+lab:CreateButton(1, 'BT4Button1')
+lab:CreateButton(180, 'BT4Button180')
+lab:CreateButton(2, 'OtherAddonButton2')
+makeBT('BT4PetButton1')
+'''
+lua, ns = runtime(BT_SETUP)
+assert ns.counts.buttons == 3
+lua.execute(r'''
+local b = BT4Button1
+assert(b.normal.texture:find('gloss'))
+assert(b.HotKey.alpha == nil and b.Name.alpha == nil and b.Name.font == nil)
+assert(b.Border.color == nil and b.cooldown.point == nil and b.icon.coords == nil)
+assert(OtherAddonButton2.normal.texture == nil)
+b:SetNormalTexture('reset'); assert(b.normal.texture:find('gloss'))
+b:SetNormalAtlas('reset'); assert(b.normal.texture:find('gloss'))
+b.normal:SetTexCoord(.2,.8,.2,.8); assert(b.normal.coords[1] == 0)
+b.normal:SetVertexColor(1,1,1); assert(b.normal.color[1] == .37)
+local hooks = b.normal.hooks
+for i = 1, 5 do fire('PLAYER_ENTERING_WORLD'); drain() end
+assert(b.normal.hooks == hooks)
+combat = true
+lab:CreateButton(181, 'BT4Button181'); drain()
+assert(BT4Button181.normal.texture == nil)
+combat = false; fire('PLAYER_REGEN_ENABLED'); drain()
+assert(BT4Button181.normal.texture:find('gloss'))
+''')
+assert ns.counts.buttons == 4
+lua, ns = runtime(BT_SETUP, 'LortiUIForeverDB = {buttons=false}\n')
+assert ns.counts.buttons == 0
+lua, ns = runtime(BT_SETUP + '; C_AddOns.IsAddOnLoaded = function() return true end')
+assert ns.counts.buttons == 0
+lua, ns = runtime(BT_SETUP + '; LibStub = nil')
+assert ns.counts.buttons == 2
+print('PASS: Bartender discovery, reset hooks, text ownership, Masque and combat deferral.')

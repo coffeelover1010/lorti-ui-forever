@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.4-beta — 2026-10-07
+
+- Add Lorti styling for Bartender4 action and pet buttons, including later-created action buttons and border texture resets.
+- Preserve Bartender label controls and defer initial styling during combat; Masque retains ownership when loaded.
+- Document remaining Classic feature differences in docs/CLASSIC-PARITY.md.
+- Offline Lua checks passed; live appearance, combat and taint verification pending.
+
+- Add an in-game action bar screenshot and shorten the project description.
+
 ## 0.1.3-beta — 2026-09-26
 
 - Added separate options for bag windows, bag bar, key ring, menu bar and XP bar borders.

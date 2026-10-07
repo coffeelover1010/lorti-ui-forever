@@ -125,7 +125,7 @@ end
 
 local function status()
     local version, build, _, interface = GetBuildInfo()
-    printLine("0.1.3-beta | client " .. tostring(version) .. " (" .. tostring(build) ..
+    printLine("0.1.4-beta | client " .. tostring(version) .. " (" .. tostring(build) ..
         "), interface " .. tostring(interface))
     printLine("Styled " .. ns.counts.textures .. " artwork textures, " .. ns.counts.buttons ..
         " buttons and " .. ns.counts.auras .. " aura icons this session.")

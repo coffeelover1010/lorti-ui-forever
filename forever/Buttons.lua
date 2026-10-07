@@ -13,7 +13,7 @@ local function child(button, field, suffix)
     return name and _G[name .. (suffix or field)]
 end
 
-local function style(button)
+local function style(button, bartender)
     if not ns.Safe(button) or styled[button] then return end
     local icon = child(button, "icon", "Icon") or button.Icon or child(button, "IconTexture")
     if not ns.Safe(icon) or not icon.SetTexCoord or not button.GetNormalTexture then return end
@@ -22,14 +22,26 @@ local function style(button)
     styled[button] = true
     ns.counts.buttons = ns.counts.buttons + 1
     -- Keep native masks, button geometry, cooldowns, checked state and overlays.
+    local changing = false
     local function normalArt()
+        if changing then return end
+        changing = true
         normal:SetTexture(ns.media .. "gloss")
         normal:SetTexCoord(0, 1, 0, 1)
+        changing = false
     end
     normalArt()
     normal:SetAllPoints(button)
     ns.Tint(normal, 0.37, 0.3, 0.3)
     ns.Hook(normal, "SetAtlas", normalArt)
+    if bartender then
+        -- LAB reapplies its border on action/profile updates. Keep its methods
+        -- intact: only restore decorative artwork, never secure button state.
+        ns.Hook(normal, "SetTexture", normalArt)
+        ns.Hook(normal, "SetTexCoord", normalArt)
+        ns.Hook(button, "SetNormalTexture", normalArt)
+        ns.Hook(button, "SetNormalAtlas", normalArt)
+    end
     local pushed = button.GetPushedTexture and button:GetPushedTexture()
     if ns.Safe(pushed) then pushed:SetTexture(ns.media .. "pushed"); pushed:SetAllPoints(button) end
     local flash = child(button, "Flash")
@@ -39,6 +51,10 @@ local function style(button)
     -- item quality/equipped borders or Blizzard's cooldown frame.
     local edge = ns.Outline(button, button, false)
     edge:SetAlpha(0.35)
+    if bartender then
+        -- Bartender owns text visibility, fonts, bindings and macro labels.
+        return
+    end
     local overlay = button.TextOverlayContainer
     local hotkey = overlay and overlay.HotKey or child(button, "HotKey")
     local count = overlay and overlay.Count or child(button, "Count")
@@ -55,9 +71,32 @@ local function style(button)
     ns.Hook(button, "Update", textVisibility)
 end
 
+local watchedLibrary
+local function applyBartender()
+    if not C_AddOns or not C_AddOns.IsAddOnLoaded("Bartender4") then return end
+    local library = LibStub and LibStub("LibActionButton-1.0", true)
+    if library and library.GetAllButtons then
+        for button in pairs(library:GetAllButtons()) do
+            if ns.Safe(button) and button.GetName then
+                local name = button:GetName()
+                if name and name:match("^BT4Button%d+$") then style(button, true) end
+            end
+        end
+        if watchedLibrary ~= library then
+            ns.Hook(library, "CreateButton", ns.Queue)
+            watchedLibrary = library
+        end
+    else
+        -- Compatibility with older Bartender builds lacking the registry API.
+        for i = 1, 120 do style(_G["BT4Button" .. i], true) end
+    end
+    for i = 1, 10 do style(_G["BT4PetButton" .. i], true) end
+end
+
 local function apply()
     -- Masque owns buttons when installed; do not compete for their textures.
     if C_AddOns and C_AddOns.IsAddOnLoaded("Masque") then return end
+    applyBartender()
     for _, prefix in ipairs(prefixes) do
         for i = 1, 12 do style(_G[prefix .. i]) end
     end
